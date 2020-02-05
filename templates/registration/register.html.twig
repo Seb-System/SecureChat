@@ -1,5 +1,5 @@
-{% block title %}Page d'inscription
-{% endblock %}
+{% extends 'base.html.twig' %}
+{% block title %}Inscription - SecureChat{% endblock %}
 {% block stylesheet %}
 	<link href="dist/img/favicon.png" type="image/png" rel="icon">
 	<link rel="stylesheet" href="dist/css/bootstrap.min.css">
@@ -23,7 +23,7 @@
 											<img src="dist/img/logo2.png" alt="">
 										</div>
 										<h1>
-											<i class="ti-key"></i>Sign up</h1>
+											<i class="ti-key"></i>Inscription</h1>
 									</div>
 									{{ form_start(form, {'attr': {'class': 'login-up'}}) }}
 									<div class="form-group">
