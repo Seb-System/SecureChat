@@ -8,25 +8,10 @@
 		<title>
 			{% block title %}{% endblock %}
 		</title>
-		{% block stylesheet %}
-			<link href="dist/img/favicon.png" type="image/png" rel="icon">
-			<link rel="stylesheet" href="dist/css/bootstrap.min.css">
-			<link rel="stylesheet" href="dist/css/perfect-scrollbar.min.css">
-			<link rel="stylesheet" href="dist/css/themify-icons.css">
-			<link rel="stylesheet" href="dist/css/emoji.css">
-			<link rel="stylesheet" href="dist/css/style.css">
-			<link rel="stylesheet" href="dist/css/responsive.css">
-		{% endblock %}
+		{% block stylesheet %}{% endblock %}
 	</head>
 	<body>
 		{% block body %}{% endblock %}
-		{% block javascripts %}
-			<script src="dist/js/jquery3.3.1.js"></script>
-			<script src="dist/js/vendor/jquery-slim.min.js"></script>
-			<script src="dist/js/vendor/popper.min.js"></script>
-			<script src="dist/js/bootstrap.min.js"></script>
-			<script src="dist/js/perfect-scrollbar.min.js"></script>
-			<script src="dist/js/script.js"></script>
-		{% endblock %}
+		{% block javascripts %}{% endblock %}
 	</body>
 </html>
