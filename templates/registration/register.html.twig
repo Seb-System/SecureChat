@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block title %}Inscription - SecureChat{% endblock %}
+{% block title %}Inscription - SecureChat
+{% endblock %}
 {% block stylesheet %}
 	<link href="dist/img/favicon.png" type="image/png" rel="icon">
 	<link rel="stylesheet" href="dist/css/bootstrap.min.css">
@@ -52,6 +53,11 @@
 									</div>
 									<button type="submit" class="btn button">S'enregistrer</button>
 									{{ form_end(form) }}
+									<div class="d-flex justify-content-center">
+										<span>Vous n'avez pas compte ?
+											<a href="{{ path('app_login') }}">Click Here</a>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -69,4 +75,3 @@
 	<script src="dist/js/perfect-scrollbar.min.js"></script>
 	<script src="dist/js/script.js"></script>
 {% endblock %}
-

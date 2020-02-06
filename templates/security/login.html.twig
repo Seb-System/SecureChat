@@ -1,58 +1,69 @@
 {% extends 'base.html.twig' %}
-{% block title %}Connexion - SecureChat{% endblock %}
+{% block title %}Connexion - SecureChat
+{% endblock %}
 {% block stylesheet %}
-    <link href="dist/img/favicon.png" type="image/png" rel="icon">
-    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="dist/css/perfect-scrollbar.min.css">
-    <link rel="stylesheet" href="dist/css/themify-icons.css">
-    <link rel="stylesheet" href="dist/css/emoji.css">
-    <link rel="stylesheet" href="dist/css/style.css">
-    <link rel="stylesheet" href="dist/css/responsive.css">
+	<link href="dist/img/favicon.png" type="image/png" rel="icon">
+	<link rel="stylesheet" href="dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="dist/css/perfect-scrollbar.min.css">
+	<link rel="stylesheet" href="dist/css/themify-icons.css">
+	<link rel="stylesheet" href="dist/css/emoji.css">
+	<link rel="stylesheet" href="dist/css/style.css">
+	<link rel="stylesheet" href="dist/css/responsive.css">
 {% endblock %}
 {% block body %}
-        <main>
-            <div class="layout">
-                <div class="sign-bg">
-                    <div class="start">
-                        <div class="container">
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="register-content">
-                                        <div class="login-header">
-                                            <div class="logo">
-                                                <img src="dist/img/logo2.png" alt="">
-                                            </div>
-                                            <h1><i class="ti-key"></i>Connexion</h1>
-                                        </div>
-                                        <form class="login-up" method="post">
-                                            {% if error %}
-                                                <div class="alert alert-danger">Email/Password incorrect</div>
-                                            {% endif %}
-                                            <div class="form-group">
-                                                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" value="{{ last_username }}" required>
-                                                <button class="btn icon"><i class="ti-email"></i></button>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-                                                <button class="btn icon"><i class="ti-lock"></i></button>
-                                            </div>
-                                            <button type="submit" class="btn button">Connexion</button>
-                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+	<main>
+		<div class="layout">
+			<div class="sign-bg">
+				<div class="start">
+					<div class="container">
+						<div class="row d-flex justify-content-center">
+							<div class="col-lg-4 col-md-6">
+								<div class="register-content">
+									<div class="login-header">
+										<div class="logo">
+											<img src="dist/img/logo2.png" alt="">
+										</div>
+										<h1>
+											<i class="ti-key"></i>Connexion</h1>
+									</div>
+									<form class="login-up" method="post">
+										{% if error %}
+											<div class="alert alert-danger">Email/Password incorrect</div>
+										{% endif %}
+										<div class="form-group">
+											<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email" value="{{ last_username }}" required>
+											<button class="btn icon">
+												<i class="ti-email"></i>
+											</button>
+										</div>
+										<div class="form-group">
+											<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+											<button class="btn icon">
+												<i class="ti-lock"></i>
+											</button>
+										</div>
+										<button type="submit" class="btn button">Connexion</button>
+										<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+									</form>
+									<div class="d-flex justify-content-center">
+										<span>Vous n'avez pas compte ?
+											<a href="{{ path('app_register') }}">Click Here</a>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
 {% endblock %}
 {% block javascripts %}
-    <script src="dist/js/jquery3.3.1.js"></script>
-    <script src="dist/js/vendor/jquery-slim.min.js"></script>
-    <script src="dist/js/vendor/popper.min.js"></script>
-    <script src="dist/js/bootstrap.min.js"></script>
-    <script src="dist/js/perfect-scrollbar.min.js"></script>
-    <script src="dist/js/script.js"></script>
+	<script src="dist/js/jquery3.3.1.js"></script>
+	<script src="dist/js/vendor/jquery-slim.min.js"></script>
+	<script src="dist/js/vendor/popper.min.js"></script>
+	<script src="dist/js/bootstrap.min.js"></script>
+	<script src="dist/js/perfect-scrollbar.min.js"></script>
+	<script src="dist/js/script.js"></script>
 {% endblock %}
