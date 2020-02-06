@@ -33,7 +33,7 @@ class MessagerieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             #code
         }
-
+        
         return $this->render('messagerie/index.html.twig', [
         	'username' => $username,
             'controller_name' => 'MessagerieController',
