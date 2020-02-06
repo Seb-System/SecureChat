@@ -25,7 +25,7 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=180)
      * @Assert\Email(strict=true, message="Le format de l'email est incorrect")
      * @Assert\Email(checkMX=true, message="Aucun serveur mail n'a été trouvé pour ce domaine")
      */
