@@ -12,7 +12,15 @@ class MessagerieController extends AbstractController
      */
     public function index()
     {
+
+    	$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+    	$user = $this->getUser();
+    	$username = $user->getUsername();
+
+
         return $this->render('messagerie/index.html.twig', [
+        	'username' => $username,
             'controller_name' => 'MessagerieController',
         ]);
     }

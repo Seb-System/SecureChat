@@ -17,15 +17,15 @@
 					<div class="container">
 						<div class="inside">
 							<div class="nav nav-tab menu">
-								<a href="#settings" data-toggle="tab" title="User Setting">
+								<a href="#settings" data-toggle="tab" title="Compte">
 									<i class="ti-panel"></i>
 									Compte
 								</a>
-								<a href="#members" data-toggle="tab" title="All members">
+								<a href="#members" data-toggle="tab" title="Amis">
 									<i class="ti-home"></i>
 									Amis
 								</a>
-								<a href="#discussions" data-toggle="tab" class="active" title="Chat">
+								<a href="#discussions" data-toggle="tab" title="Messages">
 									<i class="ti-comment-alt"></i>
 									Messages récents
 								</a>
@@ -33,11 +33,14 @@
 									<i class="ti-bell"></i>
 									Notifications
 								</a>
-								<a href="" id="dark" class="dark-theme" title="Use Night Mode">
+								<a href="" id="dark" class="dark-theme" title="Mode">
 									<i class="ti-wand"></i>
 									Mode Nuit/Jour
 								</a>
-								<a href="sign-in.html" class="btn power" title="Sign Out"><i class="ti-power-off"></i></a>
+								<a href="{{ path('app_logout') }}" title="Deconnexion">
+									<i class="ti-power-off"></i>
+									Deconnexion
+								</a>
 							</div>
 						</div>
 					</div>
@@ -112,88 +115,13 @@
 									<div class="discussions" id="scroller">
 										<h1>Chats</h1>
 										<div class="list-group" id="chats" role="tablist">
-											<a href="#list-chat" class="filterDiscussions all unread single active" id="list-chat-list" data-toggle="list" role="tab">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
-												<div class="status online"></div>
-												
-												<div class="data">
-													<h5>Sarah Dalton</h5>
-													<div class="new bg-yellow">
-														<span>5+</span>
-													</div>
-													<span>Mon</span>
-													<p>A new feature has been updated...</p>
-												</div>
-											</a>									
-											<a href="#list-empty" class="filterDiscussions all unread single" id="list-empty-list" data-toggle="list" role="tab">
-												<img class="avatar-md" src="dist/img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Michael" alt="avatar">
-												<div class="status offline"></div>
-												
-												<div class="data">
-													<h5>Bob Frank</h5>
-													<div class="new bg-red">
-														<span>9+</span>
-													</div>
-													<span>Sun</span>
-													<p>How can i improve my chances?</p>
-												</div>
-											</a>									
-											<a href="#list-chat" class="filterDiscussions all read single" id="list-chat-list2" data-toggle="list" role="tab">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-2.jpg" data-toggle="tooltip" data-placement="top" title="Lucy" alt="avatar">
-												<div class="status online"></div>
-												<div class="data">
-													<h5>Lucy Grey</h5>
-													<span>Tus</span>
-													<p>Typing...</p>
-												</div>
-											</a>
-											<a href="#list-empty" class="filterDiscussions all read single" id="list-empty-list2" data-toggle="list" role="tab">
-												<img class="avatar-md" src="dist/img/avatars/avatar-male-2.jpg" data-toggle="tooltip" data-placement="top" title="james idoms" alt="avatar">
-												<div class="status offline"></div>
-												<div class="data">
-													<h5>james idoms</h5>
-													<span>5 mins</span>
-													<p>By injected humour, or randomi...</p>
-												</div>
-											</a>
-											<a href="#list-chat" class="filterDiscussions all read single" id="list-chat-list3" data-toggle="list" role="tab">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-3.jpg" data-toggle="tooltip" data-placement="top" title="Linda Gates" alt="avatar">
-												<div class="status away"></div>
-												<div class="data">
-													<h5>Linda gates</h5>
-													<span>Mon</span>
-													<p>No more running out of the office...</p>
-												</div>
-											</a>
-											<a href="#list-empty" class="filterDiscussions all read single" id="list-empty-list3" data-toggle="list" role="tab">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
-												<div class="status online"></div>
-												<div class="data">
-													<h5>Karen joye</h5>
-													<span>Fri</span>
-													<p>All your favourite books at...</p>
-												</div>
-											</a>
-											<a href="#list-chat" class="filterDiscussions all unread single" id="list-chat-list4" data-toggle="list" role="tab">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-6.jpg" data-toggle="tooltip" data-placement="top" title="Lisa Honey" alt="avatar">
-												<div class="status offline"></div>
-												
-												<div class="data">
-													<h5>Lisa Honey</h5>
-													<div class="new bg-indigo">
-														<span>1+</span>
-													</div>
-													<span>Feb 10</span>
-													<p>Be the first to know about...</p>
-												</div>
-											</a>
 											<a href="#list-empty" class="filterDiscussions all read single" id="list-empty-list4" data-toggle="list" role="tab">
 												<img class="avatar-md" src="dist/img/avatars/avatar-male-3.jpg" data-toggle="tooltip" data-placement="top" title="Daniel Cabral" alt="avatar">
 												<div class="status offline"></div>
 												<div class="data">
-													<h5>Daniel Cabral</h5>
-													<span>Feb 9</span>
-													<p>Dear Daniel Cabral, your massage is today...</p>
+													<h5>Jerek7</h5>
+													<span>6 Fevr.</span>
+													<p>Coucou, comment tu vas ?</p>
 												</div>
 											</a>
 											<a href="#list-chat" class="filterDiscussions all unread single" id="list-chat-list5" data-toggle="list" role="tab">
@@ -201,12 +129,12 @@
 												<div class="status online"></div>
 												
 												<div class="data">
-													<h5>Jhon Doe</h5>
+													<h5>Fardi88</h5>
 													<div class="new bg-green">
 														<span>4+</span>
 													</div>
-													<span>Thu</span>
-													<p>Unfortunately session cancelled..</p>
+													<span>Aujourd'hui</span>
+													<p>Tu pourrais me repondre par contre !</p>
 												</div>
 											</a>
 										</div>
@@ -225,83 +153,27 @@
 										</form>
 									</div>
 									<div class="list-group sort">
-										<button class="btn filterNotificationsBtn active show" data-toggle="list" data-filter="all">All</button>
-										<button class="btn filterNotificationsBtn" data-toggle="list" data-filter="latest">Latest</button>
-										<button class="btn filterNotificationsBtn" data-toggle="list" data-filter="oldest">Oldest</button>
+										<button class="btn filterNotificationsBtn active show" data-toggle="list" data-filter="all">Tout</button>
+										<button class="btn filterNotificationsBtn" data-toggle="list" data-filter="latest">Nouvelles</button>
+										<button class="btn filterNotificationsBtn" data-toggle="list" data-filter="oldest">Anciennes</button>
 									</div>						
 									<div class="notifications">
 										<h1>Notifications</h1>
 										<div class="list-group" id="alerts" role="tablist">
-											<a href="#" class="filterNotifications all latest notification" data-toggle="list">
+											<a href="#" class="filterNotifications all oldest notification" data-toggle="list">
 												<img class="avatar-md" src="dist/img/avatars/avatar-female-1.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
 												<div class="status online"></div>
 												<div class="data">
-													<p>Sarah has accepted your friend request on Talkshak.</p>
-													<span>Oct 17, 2018</span>
+													<p>Jeriko vous a ajouté en ami.</p>
+													<span>Jan 17, 2020</span>
 												</div>
 											</a>
 											<a href="#" class="filterNotifications all latest notification" data-toggle="list">
 												<img class="avatar-md" src="dist/img/avatars/avatar-male-1.jpg" data-toggle="tooltip" data-placement="top" title="Michael" alt="avatar">
 												<div class="status online"></div>
 												<div class="data">
-													<p>Michael, you have a new friend suggestion today.</p>
-													<span>Jun 21, 2018</span>
-												</div>
-											</a>
-											<a href="#" class="filterNotifications all latest notification" data-toggle="list">
-												<img class="avatar-md" src="dist/img/avatars/avatar-male-2.jpg" data-toggle="tooltip" data-placement="top" title="james idoms" alt="avatar">
-												<div class="status online"></div>
-												<div class="data">
-													<p>james idoms have just sent you a new message.</p>
-													<span>Feb 15, 2018</span>
-												</div>
-											</a>
-											<a href="#" class="filterNotifications all latest notification" data-toggle="list">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-6.jpg" data-toggle="tooltip" data-placement="top" title="Lisa Honey" alt="avatar">
-												<div class="status online"></div>
-												<div class="data">
-													<p>Lisa Honey has a birthday today. Wish her all the best.</p>
-													<span>Mar 23, 2018</span>
-												</div>
-											</a>
-											<a href="#" class="filterNotifications all latest notification" data-toggle="list">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-3.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
-												<div class="status online"></div>
-												<div class="data">
-													<p>Linda Gates has accepted your friend request on Talkshak.</p>
-													<span>Jan 5, 2018</span>
-												</div>
-											</a>
-											<a href="#" class="filterNotifications all oldest notification" data-toggle="list">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
-												<div class="status offline"></div>
-												<div class="data">
-													<p>Karen joye have just sent you a new message.</p>
-													<span>Dec 22, 2017</span>
-												</div>
-											</a>
-											<a href="#" class="filterNotifications all oldest notification" data-toggle="list">
-												<img class="avatar-md" src="dist/img/avatars/avatar-female-2.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
-												<div class="status offline"></div>
-												<div class="data">
-													<p>Michael, you have a new friend suggestion today.</p>
-													<span>Nov 29, 2017</span>
-												</div>
-											</a>
-											<a href="#" class="filterNotifications all oldest notification" data-toggle="list">
-												<img class="avatar-md" src="dist/img/avatars/avatar-male-3.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
-												<div class="status offline"></div>
-												<div class="data">
-													<p>Daniel Cabral have just sent you a new message.</p>
-													<span>Sep 31, 2017</span>
-												</div>
-											</a>
-											<a href="#" class="filterNotifications all oldest notification" data-toggle="list">
-												<img class="avatar-md" src="dist/img/avatars/avatar-male-4.jpg" data-toggle="tooltip" data-placement="top" title="Sarah" alt="avatar">
-												<div class="status offline"></div>
-												<div class="data">
-													<p>Jhon Doe has a birthday today. Wish him all the best.</p>
-													<span>Jul 19, 2017</span>
+													<p>Michael, vous a ajouté en ami.</p>
+													<span>Fev 2, 2020</span>
 												</div>
 											</a>
 										</div>
@@ -313,7 +185,7 @@
 									<div class="settings">
 										<div class="profile">
 											<img class="avatar-xl" src="dist/img/avatars/avatar-male-1.jpg" alt="avatar">
-											<h1><a href="#">Bob Frank</a></h1>
+											<h1><a href="#">{{ username }}</a></h1>
 											<span>New York, USA</span>
 											
 										</div>
