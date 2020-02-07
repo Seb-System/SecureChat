@@ -33,9 +33,7 @@ class MessagerieController extends AbstractController
 
         //Formulaire
         $groupe = new Groupe;
-        $form = $this->createForm(GroupeFormType::class, $groupe, array(
-            'nbUsers' => count($allUsers)
-        ));
+        $form = $this->createForm(GroupeFormType::class, $groupe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -43,9 +41,12 @@ class MessagerieController extends AbstractController
             $groupe->setPicture("../public/dist/img/avatars/avatar-female-1.jpg");
             $groupe->setDate(new \DateTime('now'));
             $groupe->setUsersP($this->getUser());
-            for ($i=0; $i < $userNb; $i++) {
-                $groupe->addUser($allUsers[$form->get('checkbox_'.$i)->getData()]);
+            $groupe->setName($form->get('name')->getData());
+            $groupe->addUser($this->getUser());
+            foreach($groupe->getUsers() as $users) {
+                $users -> addGroupe($groupe);
             }
+
             $manager->flush();
         }
 

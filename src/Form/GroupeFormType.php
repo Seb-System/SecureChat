@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Groupe;
+use App\Entity\User;
 use Doctrine\DBAL\Types\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -18,6 +20,11 @@ class GroupeFormType extends AbstractType
         $builder
             ->add('name', null, [
                 'attr' => ['type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nom du groupe']
+            ])-> add('users', EntityType::class, [
+                'class' => User::class,
+                'multiple' => true,
+                'expanded' => true,
+                'choice_label' => 'username',
             ])
             //->add('picture')
             //->add('date')
@@ -34,18 +41,6 @@ class GroupeFormType extends AbstractType
                 ]
             ])*/
         ;
-
-        for($i = 0; $i < $options['nbUsers']; $i++ ){
-            $builder ->add('checkbox_' . $i , CheckboxType::class, [
-                'mapped' => false,
-                'required' => false,
-                'attr' => array(
-                    'for' => $i,
-                    'class' => 'custom-control-input'
-                )
-            ]);
-        }
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
