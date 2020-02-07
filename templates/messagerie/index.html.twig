@@ -10,6 +10,8 @@
 	<link rel="stylesheet" href="dist/css/style.css">
 	<link rel="stylesheet" href="dist/css/responsive.css">
 	<link rel="stylesheet" href="dist/css/dark.css">
+
+
 {% endblock %}
 {% block body %}
 	<main>
@@ -621,21 +623,24 @@
 						<div class="content">
 							{{ form_start(form) }}
 							<div class="form-group">
-								<label for="utilisateurs">Ajouter des participants:</label>
-								{% set i = 0 %}
-								{% for u in allUsers %}
-									<div>
-										<input type="checkbox" id="{{u.username}}" name="{{i}}" value="{{u.id}}">
-										<label for="{{u.username}}">{{u.username}}</label>
-									</div>
-									{% set i = i + 1 %}
+								<label for="topic">Utilisateur:</label>
+								<div class="d-flex flex-lg-wrap justify-content-around custom-control custom-checkbox">
+								{% for i in 0..userNb-1 %}
+								<div>
+									<label class="switch">
+									{{ form_widget(attribute(form, 'checkbox_' ~ i), {'attr': {'value': allUsers[i].id }}) }}
+									<span class="slider round mode"></span>
+									</label>
+								</div>
+								{{ allUsers[i].username }}
 								{% endfor %}
+								</div>					
 							</div>
 							<div class="form-group">
 								<label for="topic">Nom du groupe:</label>
 								{{ form_widget(form.name) }}
 							</div>
-							<button type="submit" class="btn button w-100">Commencer la conversation</button>
+							<button type="submit" onclick="errorMsg()" class="btn button w-100">Commencer la conversation</button>
 							{{ form_end(form) }}
 						</div>
 					</div>
@@ -1080,5 +1085,4 @@
 	<script src="dist/js/bootstrap.min.js"></script>
 	<script src="dist/js/perfect-scrollbar.min.js"></script>
 	<script src="dist/js/script.js"></script>
-	<script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 {% endblock %}

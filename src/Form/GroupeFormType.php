@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Groupe;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,14 +33,26 @@ class GroupeFormType extends AbstractType
                     'attr' => ['class' => 'user form-user'],
                 ]
             ])*/
-            //->add('users_p')
         ;
+
+        for($i = 0; $i < $options['nbUsers']; $i++ ){
+            $builder ->add('checkbox_' . $i , CheckboxType::class, [
+                'mapped' => false,
+                'required' => false,
+                'attr' => array(
+                    'for' => $i,
+                    'class' => 'custom-control-input'
+                )
+            ]);
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Groupe::class,
+            'nbUsers' => 0
         ]);
     }
 }
