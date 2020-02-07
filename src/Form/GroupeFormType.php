@@ -4,11 +4,9 @@ namespace App\Form;
 
 use App\Entity\Groupe;
 use App\Entity\User;
-use Doctrine\DBAL\Types\TextType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,11 +15,17 @@ class GroupeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('name', null, [
                 'attr' => ['type' => 'text', 'class' => 'form-control', 'placeholder' => 'Nom du groupe']
-            ])-> add('users', EntityType::class, [
+            ])->add('users', EntityType::class, [
                 'class' => User::class,
+                'query_builder' =>  function (EntityRepository $er) use ($options) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.id != :id')
+                        ->setParameter('id', $options['idUser']);
+                },
                 'multiple' => true,
                 'expanded' => true,
                 'choice_label' => 'username',
@@ -39,15 +43,14 @@ class GroupeFormType extends AbstractType
                 'entry_options' => [
                     'attr' => ['class' => 'user form-user'],
                 ]
-            ])*/
-        ;
+            ])*/;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Groupe::class,
-            'nbUsers' => 0
+            'idUser' => 0
         ]);
     }
 }

@@ -39,6 +39,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
+
+    public function allUsersExceptCurrentOne($id)
+    {
+        $builder = $this->createQueryBuilder('u');
+        return $users =  $builder
+            ->where('u.id != :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->execute();
+    }
+
     /*
     public function findByExampleField($value)
     {
