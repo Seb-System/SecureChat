@@ -19,7 +19,8 @@
 									<div class="inside">
 										<div class="data">
 											<h5>
-												{% set i = 0 %}
+												<strong>{{'Groupe : ' ~ currentGroupe.name}}</strong>
+												({% set i = 0 %}
 												{% for u in currentUsersGroupe %}
 													{% if u == user %}
 														<a href="#">{{ "Vous" }}</a>
@@ -30,7 +31,7 @@
 														{{", "}}
 													{% endif %}
 													{% set i = i + 1 %}
-												{% endfor %}
+												{% endfor %})
 											</h5>
 										</div>
 										<div class="dropdown">
@@ -58,10 +59,10 @@
 								<div
 									class="col-md-12">
 									<!--div class="date">
-																																					<hr>
-																																					<span>Yesterday</span>
-																																					<hr>
-																																				</div-->
+																																														<hr>
+																																														<span>Yesterday</span>
+																																														<hr>
+																																													</div-->
 									{% for m in messages %}
 										{% if m.user.id != user.id %}
 											<div class="message">
@@ -72,7 +73,7 @@
 															<p>{{m.content}}</p>
 														</div>
 													</div>
-													<span>{{m.date|date("j/m/y \\à G\\hi")}}</span>
+													<span>{{m.date|date("M jS \\a\\t G\\hi")}}</span>
 												</div>
 											</div>
 										{% else %}
@@ -83,26 +84,26 @@
 															<p>{{m.content}}</p>
 														</div>
 													</div>
-													<span>{{m.date|date("j/m/y \\à G\\hi")}}</span>
+													<span>{{m.date|date("M jS \\a\\t G\\hi")}}</span>
 												</div>
 											</div>
 										{% endif %}
 									{% endfor %}
 									<!-- Entrain d'écrire -->
 									{# <div class="message">
-																		<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
-																		<div class="text-main">
-																		<div class="text-group">
-																			<div class="text typing">
-																				<div class="wave">
-																					<span class="dot"></span>
-																					<span class="dot"></span>
-																					<span class="dot"></span>
-																				</div>
-																			</div>
-																		</div>
-																		</div>
-																		</div> #}
+																											<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+																											<div class="text-main">
+																											<div class="text-group">
+																												<div class="text typing">
+																													<div class="wave">
+																														<span class="dot"></span>
+																														<span class="dot"></span>
+																														<span class="dot"></span>
+																													</div>
+																												</div>
+																											</div>
+																											</div>
+																											</div> #}
 								</div>
 							</div>
 						</div>
@@ -201,12 +202,4 @@
 			</div>
 		{% endif %}
 	</div>
-{% endblock %}
-{% block javascripts %}
-	<script src="../dist/js/jquery3.3.1.js"></script>
-	<script src="../dist/js/vendor/jquery-slim.min.js"></script>
-	<script src="../dist/js/vendor/popper.min.js"></script>
-	<script src="../dist/js/bootstrap.min.js"></script>
-	<script src="../dist/js/perfect-scrollbar.min.js"></script>
-	<script src="../dist/js/script.js"></script>
 {% endblock %}

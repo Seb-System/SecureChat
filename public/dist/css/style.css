@@ -2422,7 +2422,7 @@ input:checked+.slider:before {
 }
 
 #settings #accordionSettings {
-  max-height: 440px;
+  max-height: 75vh;
 }
 
 /*--- add new group button ---*/

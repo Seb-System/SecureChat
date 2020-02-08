@@ -48,7 +48,7 @@
 									<!-- Start of Discussions -->
 									<div id="discussions" class="tab-pane fade in active show">
 										<figure class="setting"><img class="avatar-xl" src="{{asset('/dist/img/avatars/' ~ user.picture )}}" alt="avatar"></figure>
-										<span class="logo"><img src="dist/img/logo.png" alt=""></span>
+										<span class="logo"><img src="{{asset('dist/img/logo.png')}}" alt=""></span>
 										<div class="search">
 											<form class="form-inline position-relative">
 												<input type="search" class="form-control" id="conversations" placeholder="Rechercher une discussions...">
@@ -81,17 +81,16 @@
 														<!--div class="status offline"></div-->
 														<div class="data">
 															<h5>{{g.name}}</h5>
-															<span>{{ g.date|date("j/m/Y \\à G\\hi") }}</span>
+															<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
 															<p>Aucuns méssages envoyés</p>
 														</div>
 													</a>
 												{% elseif g.messages|length > 0 %}
-													<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all unread single">
+													<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
 														<img class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Jhon Doe" alt="avatar">
-														<div class="status online"></div>
 														<div class="data">
 															<h5>{{g.name}}</h5>
-															<span>{{ g.date|date("j/m/Y \\à G\\hi") }}</span>
+															<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
 															<p>Tu pourrais me repondre par contre !</p>
 														</div>
 													</a>
@@ -125,7 +124,7 @@
 														<div class="content">
 															<div class="upload">
 																<div class="data">
-																	<img class="avatar-xl" src="dist/img/avatars/avatar-male-1.jpg" alt="image">
+																	<img class="avatar-xl" src="{{asset('dist/img/avatars/' ~ user.picture)}}" alt="image">
 																	<label>
 																		<input type="file">
 																		<span class="btn button">Upload avatar</span>
@@ -215,10 +214,17 @@
 							</div>
 						</div>
 					</div>
-				<!-- End Create Chat -->
-				{% block body %}{% endblock %}
-			</main>
-			{% block javascripts %}{% endblock %}
+					<!-- End Create Chat -->
+					{% block body %}{% endblock %}
+				</main>
+				<script src="{{asset('/dist/js/jquery3.3.1.js')}}"></script>
+				<script src="{{asset('/dist/js/vendor/jquery-slim.min.js')}}"></script>
+				<script src="{{asset('/dist/js/vendor/popper.min.js')}}"></script>
+				<script src="{{asset('/dist/js/bootstrap.min.js')}}"></script>
+				<script src="{{asset('/dist/js/perfect-scrollbar.min.js')}}"></script>
+				<script src="{{asset('/dist/js/script.js')}}"></script>
+				{% block javascripts %}{% endblock %}
+			</body>
 		</body>
 	</html>
 </body></html>

@@ -64,7 +64,6 @@ class MessagerieController extends AbstractController
             'user' => $user,
             'groupes' => $groupes,
             'form' => $form->createView(),
-            'allUsers' => $allUsersExceptCurrentOne,
         ]);
     }
 
@@ -84,9 +83,6 @@ class MessagerieController extends AbstractController
 
         //Get messages
         $messages = $repoGroupe->find($id)->getMessages();
-
-        //Get all users
-        $allUsersExceptCurrentOne = $repoUser->allUsersExceptCurrentOne($userId);
 
         //Formulaire créer un groupe
         $groupe = new Groupe;
@@ -123,6 +119,7 @@ class MessagerieController extends AbstractController
             $message->setState(1);
             $message->setUser($this->getUser());
             $message->setGroupe($currentGroupe);
+            $currentGroupe->setDate(new \DateTime('now'));
             $manager->flush();
             return $this->redirectToRoute('conv', ['id' => $id]);
         }
@@ -131,9 +128,9 @@ class MessagerieController extends AbstractController
             'user' => $user,
             'groupes' => $groupes,
             'form' => $form->createView(),
-            'allUsers' => $allUsersExceptCurrentOne,
             'messages' => $messages,
             'currentUsersGroupe' => $currentGroupe->getUsers(),
+            'currentGroupe' => $currentGroupe,
             'sendMessage' => $sendMessage->createView(),
         ]);
     }
