@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content=""/>
+		<meta name="keywords" content=""/>
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<link href="{{asset('/dist/img/favicon.png')}}" type="image/png" rel="icon">
+		<link rel="stylesheet" href="{{asset('/dist/css/bootstrap.min.css')}}">
+		<link rel="stylesheet" href="{{asset('/dist/css/perfect-scrollbar.min.css')}}">
+		<link rel="stylesheet" href="{{asset('/dist/css/themify-icons.css')}}">
+		<link rel="stylesheet" href="{{asset('/dist/css/emoji.css')}}">
+		<link rel="stylesheet" href="{{asset('/dist/css/style.css')}}">
+		<link rel="stylesheet" href="{{asset('/dist/css/responsive.css')}}">
+		<link rel="stylesheet" href="{{asset('/dist/css/dark.css')}}"> {% block stylesheet %}{% endblock %}
+		</head>
+		<body>
+			<main>
+				<div class="layout">
+					<div class="navigation">
+						<div class="container">
+							<div class="inside">
+								<div class="nav nav-tab menu">
+									<a href="#settings" data-toggle="tab" title="Compte">
+										<i class="ti-panel"></i>
+										Compte
+									</a>
+									<a href="#discussions" data-toggle="tab" title="Conversations">
+										<i class="ti-comment-alt"></i>
+										Conversations
+									</a>
+									<a href="{{ path('app_logout') }}" title="Deconnexion">
+										<i class="ti-power-off"></i>
+										Deconnexion
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="sidebar" id="sidebar">
+						<div class="container">
+							<div class="col-md-12">
+								<div
+									class="tab-content">
+									<!-- Start of Discussions -->
+									<div id="discussions" class="tab-pane fade in active show">
+										<figure class="setting"><img class="avatar-xl" src="{{asset('/dist/img/avatars/' ~ user.picture )}}" alt="avatar"></figure>
+										<span class="logo"><img src="dist/img/logo.png" alt=""></span>
+										<div class="search">
+											<form class="form-inline position-relative">
+												<input type="search" class="form-control" id="conversations" placeholder="Rechercher une discussions...">
+												<button type="button" class="btn btn-link loop">
+													<i class="ti-search"></i>
+												</button>
+											</form>
+											<button class="btn create" data-toggle="modal" data-target="#startnewchat">
+												<i class="ti-pencil"></i>
+											</button>
+										</div>
+										<div class="list-group sort">
+											<button class="btn filterDiscussionsBtn active show" data-toggle="list" data-filter="all">Tout</button>
+											<button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="read">Lu</button>
+											<button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="unread">Non lu</button>
+										</div>
+										<div class="discussions" id="scroller">
+											{% for message in app.flashes('error') %}
+												<div class="alert alert-danger mt-2">{{message}}</div>
+											{% endfor %}
+											{% for message in app.flashes('success') %}
+												<div class="alert alert-success mt-2">{{ message }}</div>
+											{% endfor %}
+											<h1>Chats</h1>
+											{% for g in groupes %}
+												{% if g.messages|length < 1 %}
+													<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
+														<img
+														class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Daniel Cabral" alt="avatar">
+														<!--div class="status offline"></div-->
+														<div class="data">
+															<h5>{{g.name}}</h5>
+															<span>{{ g.date|date("j/m/Y \\à G\\hi") }}</span>
+															<p>Aucuns méssages envoyés</p>
+														</div>
+													</a>
+												{% elseif g.messages|length > 0 %}
+													<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all unread single">
+														<img class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Jhon Doe" alt="avatar">
+														<div class="status online"></div>
+														<div class="data">
+															<h5>{{g.name}}</h5>
+															<span>{{ g.date|date("j/m/Y \\à G\\hi") }}</span>
+															<p>Tu pourrais me repondre par contre !</p>
+														</div>
+													</a>
+												{% endif %}
+											{% endfor %}
+										</div>
+									</div>
+									<!-- End of Discussions -->
+									<!-- Start of Settings -->
+									<div class="tab-pane fade" id="settings">
+										<div class="settings">
+											<div class="profile">
+												<img class="avatar-xl" src="{{asset('dist/img/avatars/' ~ user.picture)}}" alt="avatar">
+												<h1>
+													<a href="#">{{ user.username }}</a>
+												</h1>
+											</div>
+											<div class="categories" id="accordionSettings">
+												<h1>Settings</h1>
+												<!-- Start of My Account -->
+												<div class="category">
+													<a href="#" class="title collapsed" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+														<i class="ti-user"></i>
+														<div class="data">
+															<h5>Mon compte</h5>
+															<p>Update your profile details</p>
+														</div>
+														<i class="ti-angle-down"></i>
+													</a>
+													<div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordionSettings">
+														<div class="content">
+															<div class="upload">
+																<div class="data">
+																	<img class="avatar-xl" src="dist/img/avatars/avatar-male-1.jpg" alt="image">
+																	<label>
+																		<input type="file">
+																		<span class="btn button">Upload avatar</span>
+																	</label>
+																</div>
+																<p>For best results, use an image at least 200px by 200px in .jpg or .png format!</p>
+															</div>
+															<form>
+																<div class="parent">
+																	<div class="field">
+																		<label for="firstName">First name
+																			<span>*</span>
+																		</label>
+																		<input type="text" class="form-control" id="firstName" placeholder="First name" value="Bob" required>
+																	</div>
+																	<div class="field">
+																		<label for="lastName">Last name
+																			<span>*</span>
+																		</label>
+																		<input type="text" class="form-control" id="lastName" placeholder="Last name" value="Frank" required>
+																	</div>
+																</div>
+																<div class="field">
+																	<label for="email">Email
+																		<span>*</span>
+																	</label>
+																	<input type="email" class="form-control" id="email" placeholder="Enter your email address" value="bobfrank@gmail.com" required>
+																</div>
+																<div class="field">
+																	<label for="password">Password</label>
+																	<input type="password" class="form-control" id="password" placeholder="Enter a new password" value="password" required>
+																</div>
+																<div class="field">
+																	<label for="location">Location</label>
+																	<input type="text" class="form-control" id="location" placeholder="Enter your location" value="New York, USA" required>
+																</div>
+																<button class="btn btn-link w-100">Delete Account</button>
+																<button type="submit" class="btn button w-100">Apply</button>
+															</form>
+														</div>
+													</div>
+												</div>
+												<!-- End of My Account -->
+												<!-- Start of Logout -->
+												<div class="category">
+													<a href="{{path('app_logout')}}" class="title collapsed">
+														<i class="ti-power-off"></i>
+														<div class="data">
+															<h5>Eteindre</h5>
+															<p>Se déconnecter</p>
+														</div>
+														<i class="ti-angle-down"></i>
+													</a>
+												</div>
+												<!-- End of Logout -->
+											</div>
+										</div>
+									</div>
+									<!-- End of Settings -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Create Chat -->
+					<div class="modal fade" id="startnewchat" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="requests">
+								<div class="title">
+									<h1>Créer une conversation</h1>
+									<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+										<i class="ti-close"></i>
+									</button>
+								</div>
+								<div class="content">
+									{{ form_start(form) }}
+									<div class="form-group">
+										<label for="topic">Utilisateur:</label>
+										{{ form_widget(form.users) }}
+									</div>
+									<div class="form-group">
+										<label for="topic">Nom du groupe:</label>
+										{{ form_widget(form.name) }}
+									</div>
+									<button type="submit" onclick="errorMsg()" class="btn button w-100">Commencer la conversation</button>
+									{{ form_end(form) }}
+								</div>
+							</div>
+						</div>
+					</div>
+				<!-- End Create Chat -->
+				{% block body %}{% endblock %}
+			</main>
+			{% block javascripts %}{% endblock %}
+		</body>
+	</html>
+</body></html>

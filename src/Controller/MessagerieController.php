@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Groupe;
+use App\Entity\Message;
 use App\Entity\User;
 use App\Form\GroupeFormType;
+use App\Form\MessageFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +23,6 @@ class MessagerieController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-        $username = $user->getUsername();
         $userId = $user->getId();
 
         //$repo = $this->getDoctrine()->getRepository(GroupeRepository::class);
@@ -38,24 +39,29 @@ class MessagerieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($groupe);
-            $groupe->setPicture("../public/dist/img/avatars/avatar-female-1.jpg");
-            $groupe->setDate(new \DateTime('now'));
-            $groupe->setUsersP($this->getUser());
-            $groupe->setName($form->get('name')->getData());
-            $groupe->addUser($this->getUser());
-            foreach ($groupe->getUsers() as $users) {
-                $users->addGroupe($groupe);
+            if (count($groupe->getUsers()) < 1) {
+                $this->addFlash('error', 'Merci de cocher au moins une personne !');
+                return $this->redirectToRoute('index');
+            } else {
+                $manager->persist($groupe);
+                $groupe->setPicture("../public/dist/img/avatars/default.jpg");
+                $groupe->setDate(new \DateTime('now'));
+                $groupe->setUsersP($this->getUser());
+                $groupe->setName($form->get('name')->getData());
+                $groupe->addUser($this->getUser());
+                foreach ($groupe->getUsers() as $users) {
+                    $users->addGroupe($groupe);
+                }
+                $manager->flush();
+                $newGroupeId = $groupe->getId();
+                $this->addFlash('success', 'Votre groupe a bien été crée !');
+                return $this->redirectToRoute('conv', ['id' => $newGroupeId]);
             }
-            $manager->flush();
-            $newGroupeId = $groupe->getId();
-            return $this->redirectToRoute('conv', ['id' => $newGroupeId]);
         }
 
 
         return $this->render('messagerie/index.html.twig', [
-            'username' => $username,
-            'controller_name' => 'MessagerieController',
+            'user' => $user,
             'groupes' => $groupes,
             'form' => $form->createView(),
             'allUsers' => $allUsersExceptCurrentOne,
@@ -68,28 +74,31 @@ class MessagerieController extends AbstractController
     public function conv(Request $request, $id)
     {
         $manager = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository(User::class);
+        $repoUser = $this->getDoctrine()->getRepository(User::class);
+        $repoGroupe = $this->getDoctrine()->getRepository(Groupe::class);
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-        $username = $user->getUsername();
+        $userId = $user->getId();
         $groupes = $this->getUser()->getGroupes();
 
         //Get messages
-        $messages = $this->getDoctrine()->getRepository(Groupe::class)->find($id)->getMessages();
+        $messages = $repoGroupe->find($id)->getMessages();
 
         //Get all users
-        $allUsers = $repo->findAll();
-        $userNb = count($allUsers);
+        $allUsersExceptCurrentOne = $repoUser->allUsersExceptCurrentOne($userId);
 
-        //Formulaire
+        //Formulaire créer un groupe
         $groupe = new Groupe;
-        $form = $this->createForm(GroupeFormType::class, $groupe);
+        $form = $this->createForm(GroupeFormType::class, $groupe, [
+            'idUser' => $userId
+        ]);
         $form->handleRequest($request);
+        $currentGroupe = $repoGroupe->find($id);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($groupe);
-            $groupe->setPicture("../public/dist/img/avatars/avatar-female-1.jpg");
+            $groupe->setPicture("{{asset('/dist/img/avatars/' ~ default.jpg )}}");
             $groupe->setDate(new \DateTime('now'));
             $groupe->setUsersP($this->getUser());
             $groupe->setName($form->get('name')->getData());
@@ -102,15 +111,30 @@ class MessagerieController extends AbstractController
             return $this->redirectToRoute('conv', ['id' => $newGroupeId]);
         }
 
+        //Formulaire envoyer un message
+        $message = new Message;
+        $sendMessage = $this->createForm(MessageFormType::class, $message);
+        $sendMessage->handleRequest($request);
+
+        if ($sendMessage->isSubmitted() && $sendMessage->isValid()) {
+            $manager->persist($message);
+            $message->setContent($sendMessage->get('content')->getData());
+            $message->setDate(new \DateTime('now'));
+            $message->setState(1);
+            $message->setUser($this->getUser());
+            $message->setGroupe($currentGroupe);
+            $manager->flush();
+            return $this->redirectToRoute('conv', ['id' => $id]);
+        }
 
         return $this->render('messagerie/conv.html.twig', [
-            'username' => $username,
-            'controller_name' => 'MessagerieController',
+            'user' => $user,
             'groupes' => $groupes,
             'form' => $form->createView(),
-            'allUsers' => $allUsers,
-            'userNb' => $userNb,
+            'allUsers' => $allUsersExceptCurrentOne,
             'messages' => $messages,
+            'currentUsersGroupe' => $currentGroupe->getUsers(),
+            'sendMessage' => $sendMessage->createView(),
         ]);
     }
 }
