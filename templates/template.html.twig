@@ -78,8 +78,7 @@
 													{% if g.messages|length < 1 %}
 														<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
 															<img
-															class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Daniel Cabral" alt="avatar">
-															<!--div class="status offline"></div-->
+															class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="{{g.name}}" alt="avatar">
 															<div class="data">
 																<h5>{{g.name}}</h5>
 																<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
@@ -88,7 +87,7 @@
 														</a>
 													{% elseif g.messages|length > 0 %}
 														<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
-															<img class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Jhon Doe" alt="avatar">
+															<img class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="{{g.name}}" alt="avatar">
 															<div class="data">
 																<h5>{{g.name}}</h5>
 																<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
