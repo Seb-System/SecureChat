@@ -73,29 +73,31 @@
 												<div class="alert alert-success mt-2">{{ message }}</div>
 											{% endfor %}
 											<h1>Chats</h1>
-											{% for g in groupes %}
-												{% if g.messages|length < 1 %}
-													<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
-														<img
-														class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Daniel Cabral" alt="avatar">
-														<!--div class="status offline"></div-->
-														<div class="data">
-															<h5>{{g.name}}</h5>
-															<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
-															<p>Aucuns méssages envoyés</p>
-														</div>
-													</a>
-												{% elseif g.messages|length > 0 %}
-													<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
-														<img class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Jhon Doe" alt="avatar">
-														<div class="data">
-															<h5>{{g.name}}</h5>
-															<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
-															<p>Tu pourrais me repondre par contre !</p>
-														</div>
-													</a>
-												{% endif %}
-											{% endfor %}
+											<div id="chats">
+												{% for g in groupes %}
+													{% if g.messages|length < 1 %}
+														<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
+															<img
+															class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Daniel Cabral" alt="avatar">
+															<!--div class="status offline"></div-->
+															<div class="data">
+																<h5>{{g.name}}</h5>
+																<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
+																<p>Aucuns méssages envoyés</p>
+															</div>
+														</a>
+													{% elseif g.messages|length > 0 %}
+														<a href="{{path('conv',{id:g.id})}}" class="filterDiscussions all read single">
+															<img class="avatar-md" src="{{asset('/dist/img/avatars/' ~ g.picture)}}" data-toggle="tooltip" data-placement="top" title="Jhon Doe" alt="avatar">
+															<div class="data">
+																<h5>{{g.name}}</h5>
+																<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
+																<p>Tu pourrais me repondre par contre !</p>
+															</div>
+														</a>
+													{% endif %}
+												{% endfor %}
+											</div>
 										</div>
 									</div>
 									<!-- End of Discussions -->
@@ -227,4 +229,3 @@
 			</body>
 		</body>
 	</html>
-</body></html>

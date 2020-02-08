@@ -24,9 +24,7 @@ class MessagerieController extends AbstractController
 
         $user = $this->getUser();
         $userId = $user->getId();
-
-        //$repo = $this->getDoctrine()->getRepository(GroupeRepository::class);
-        $groupes = $this->getUser()->getGroupes();
+        $groupes = $user->getGroupes();
 
         //Get all users
         $allUsersExceptCurrentOne = $repo->allUsersExceptCurrentOne($userId);
@@ -44,11 +42,11 @@ class MessagerieController extends AbstractController
                 return $this->redirectToRoute('index');
             } else {
                 $manager->persist($groupe);
-                $groupe->setPicture("../public/dist/img/avatars/default.jpg");
+                $groupe->setPicture("default-groupe.jpg");
                 $groupe->setDate(new \DateTime('now'));
-                $groupe->setUsersP($this->getUser());
+                $groupe->setUsersP($user);
                 $groupe->setName($form->get('name')->getData());
-                $groupe->addUser($this->getUser());
+                $groupe->addUser($user);
                 foreach ($groupe->getUsers() as $users) {
                     $users->addGroupe($groupe);
                 }
@@ -79,59 +77,68 @@ class MessagerieController extends AbstractController
 
         $user = $this->getUser();
         $userId = $user->getId();
-        $groupes = $this->getUser()->getGroupes();
+        $groupes = $user->getGroupes();
 
-        //Get messages
-        $messages = $repoGroupe->find($id)->getMessages();
+        if ($repoGroupe->find($id) == null) {
+            $this->addFlash('error', 'Vous ne pouvez pas acceder à ce groupe !');
+            return $this->redirectToRoute('index');
+        } else {
+            //Get messages
+            $messages = $repoGroupe->find($id)->getMessages();
 
-        //Formulaire créer un groupe
-        $groupe = new Groupe;
-        $form = $this->createForm(GroupeFormType::class, $groupe, [
-            'idUser' => $userId
-        ]);
-        $form->handleRequest($request);
-        $currentGroupe = $repoGroupe->find($id);
+            //Formulaire créer un groupe
+            $groupe = new Groupe;
+            $form = $this->createForm(GroupeFormType::class, $groupe, [
+                'idUser' => $userId
+            ]);
+            $form->handleRequest($request);
+            $currentGroupe = $repoGroupe->find($id);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($groupe);
-            $groupe->setPicture("{{asset('/dist/img/avatars/' ~ default.jpg )}}");
-            $groupe->setDate(new \DateTime('now'));
-            $groupe->setUsersP($this->getUser());
-            $groupe->setName($form->get('name')->getData());
-            $groupe->addUser($this->getUser());
-            foreach ($groupe->getUsers() as $users) {
-                $users->addGroupe($groupe);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $manager->persist($groupe);
+                $groupe->setPicture("default-groupe.jpg");
+                $groupe->setDate(new \DateTime('now'));
+                $groupe->setUsersP($user);
+                $groupe->setName($form->get('name')->getData());
+                $groupe->addUser($user);
+                foreach ($groupe->getUsers() as $users) {
+                    $users->addGroupe($groupe);
+                }
+                $manager->flush();
+                $newGroupeId = $groupe->getId();
+                $this->addFlash('success', 'Votre groupe a bien été crée !');
+                return $this->redirectToRoute('conv', ['id' => $newGroupeId]);
             }
-            $manager->flush();
-            $newGroupeId = $groupe->getId();
-            return $this->redirectToRoute('conv', ['id' => $newGroupeId]);
+
+            //Formulaire envoyer un message
+            $message = new Message;
+            $sendMessage = $this->createForm(MessageFormType::class, $message);
+            $sendMessage->handleRequest($request);
+
+            if ($sendMessage->isSubmitted() && $sendMessage->isValid()) {
+                $manager->persist($message);
+                $message->setContent($sendMessage->get('content')->getData());
+                $message->setDate(new \DateTime('now'));
+                $message->setState(1);
+                $message->setUser($user);
+                $message->setGroupe($currentGroupe);
+                $currentGroupe->setDate(new \DateTime('now'));
+                $manager->flush();
+                return $this->redirectToRoute('conv', ['id' => $id]);
+            }
+
+            // $this->addFlash('error', 'Vous n\'avez pas accès à cette conversation !');
+            // return $this->redirectToRoute('index');
+
+            return $this->render('messagerie/conv.html.twig', [
+                'user' => $user,
+                'groupes' => $groupes,
+                'form' => $form->createView(),
+                'messages' => $messages,
+                'currentUsersGroupe' => $currentGroupe->getUsers(),
+                'currentGroupe' => $currentGroupe,
+                'sendMessage' => $sendMessage->createView(),
+            ]);
         }
-
-        //Formulaire envoyer un message
-        $message = new Message;
-        $sendMessage = $this->createForm(MessageFormType::class, $message);
-        $sendMessage->handleRequest($request);
-
-        if ($sendMessage->isSubmitted() && $sendMessage->isValid()) {
-            $manager->persist($message);
-            $message->setContent($sendMessage->get('content')->getData());
-            $message->setDate(new \DateTime('now'));
-            $message->setState(1);
-            $message->setUser($this->getUser());
-            $message->setGroupe($currentGroupe);
-            $currentGroupe->setDate(new \DateTime('now'));
-            $manager->flush();
-            return $this->redirectToRoute('conv', ['id' => $id]);
-        }
-
-        return $this->render('messagerie/conv.html.twig', [
-            'user' => $user,
-            'groupes' => $groupes,
-            'form' => $form->createView(),
-            'messages' => $messages,
-            'currentUsersGroupe' => $currentGroupe->getUsers(),
-            'currentGroupe' => $currentGroupe,
-            'sendMessage' => $sendMessage->createView(),
-        ]);
     }
 }

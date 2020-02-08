@@ -2,9 +2,15 @@
 {% block title %}Messagerie - SecureChat
 {% endblock %}
 {% block body %}
+	{% if user not in currentUsersGroupe %}
+		<script>
+			window.location = "{{ path('index') }}"
+		</script>
+	{% endif %}
 	<!-- Sidebar -->
 	<!-- Chat content -->
-		<div class="main" id="chat-dialog"> <div class="tab-content" id="nav-tabContent">
+	<div class="main" id="chat-dialog">
+		<div class="tab-content" id="nav-tabContent">
 			{% if messages|length > 0 %}
 				<!-- Start of Fill Chat -->
 				<div
@@ -39,8 +45,11 @@
 												<i class="ti-view-grid"></i>
 											</button>
 											<div class="dropdown-menu dropdown-menu-right">
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
+													<i class="ti-pencil"></i>Créer un groupe
+												</a>
 												<a href="#" class="dropdown-item">
-													<i class="ti-hand-stop"></i>Ajouter un membre</a>
+													<i class="ti-plus"></i>Ajouter un membre</a>
 												<a href="#" class="dropdown-item">
 													<i class="ti-trash"></i>Kick un membre</a>
 											</div>
@@ -59,14 +68,14 @@
 								<div
 									class="col-md-12">
 									<!--div class="date">
-																																														<hr>
-																																														<span>Yesterday</span>
-																																														<hr>
-																																													</div-->
+																																																																																																																																																																												<hr>
+																																																																																																																																																																												<span>Yesterday</span>
+																																																																																																																																																																												<hr>
+																																																																																																																																																																											</div-->
 									{% for m in messages %}
 										{% if m.user.id != user.id %}
 											<div class="message">
-												<img class="avatar-md" src="{{asset('dist/img/avatars/' ~ m.user.picture)}}" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+												<img class="avatar-md" src="{{asset('dist/img/avatars/' ~ m.user.picture)}}" data-toggle="tooltip" data-placement="top" title="{{m.user.username}}" alt="avatar">
 												<div class="text-main">
 													<div class="text-group">
 														<div class="text">
@@ -91,19 +100,19 @@
 									{% endfor %}
 									<!-- Entrain d'écrire -->
 									{# <div class="message">
-																											<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
-																											<div class="text-main">
-																											<div class="text-group">
-																												<div class="text typing">
-																													<div class="wave">
-																														<span class="dot"></span>
-																														<span class="dot"></span>
-																														<span class="dot"></span>
-																													</div>
-																												</div>
-																											</div>
-																											</div>
-																											</div> #}
+																																																																																																																																																									<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+																																																																																																																																																									<div class="text-main">
+																																																																																																																																																									<div class="text-group">
+																																																																																																																																																										<div class="text typing">
+																																																																																																																																																											<div class="wave">
+																																																																																																																																																												<span class="dot"></span>
+																																																																																																																																																												<span class="dot"></span>
+																																																																																																																																																												<span class="dot"></span>
+																																																																																																																																																											</div>
+																																																																																																																																																										</div>
+																																																																																																																																																									</div>
+																																																																																																																																																									</div>
+																																																																																																																																																									</div> #}
 								</div>
 							</div>
 						</div>
@@ -142,10 +151,21 @@
 							<div class="container">
 								<div class="col-md-12">
 									<div class="inside">
-										<div class="status offline"></div>
 										<div class="data">
 											<h5>
-												<a href="#">Bob Frank</a>
+												<strong>{{'Groupe : ' ~ currentGroupe.name}}</strong>
+												({% set i = 0 %}
+												{% for u in currentUsersGroupe %}
+													{% if u == user %}
+														<a href="#">{{ "Vous" }}</a>
+													{% else %}
+														<a href="#">{{ u.username }}</a>
+													{% endif %}
+													{% if i < currentUsersGroupe|length - 1 %}
+														{{", "}}
+													{% endif %}
+													{% set i = i + 1 %}
+												{% endfor %})
 											</h5>
 										</div>
 										<div class="dropdown">
@@ -153,8 +173,11 @@
 												<i class="ti-view-grid"></i>
 											</button>
 											<div class="dropdown-menu dropdown-menu-right">
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
+													<i class="ti-pencil"></i>Créer un groupe
+												</a>
 												<a href="#" class="dropdown-item">
-													<i class="ti-headphone-alt"></i>Ajouter un utilisateur</a>
+													<i class="ti-plus"></i>Ajouter un membre</a>
 												<a href="#" class="dropdown-item">
 													<i class="ti-trash"></i>Retirer une personne</a>
 											</div>
