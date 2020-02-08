@@ -203,8 +203,10 @@
 								<div class="content">
 									{{ form_start(form) }}
 									<div class="form-group">
-										<label for="topic">Utilisateur:</label>
+										<label for="topic">Utilisateurs:</label>
+										<div>
 										{{ form_widget(form.users) }}
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="topic">Nom du groupe:</label>
@@ -225,6 +227,7 @@
 				<script src="{{asset('/dist/js/bootstrap.min.js')}}"></script>
 				<script src="{{asset('/dist/js/perfect-scrollbar.min.js')}}"></script>
 				<script src="{{asset('/dist/js/script.js')}}"></script>
+				<script src="https://kit.fontawesome.com/016ccc365f.js" crossorigin="anonymous"></script>
 				{% block javascripts %}{% endblock %}
 			</body>
 		</body>

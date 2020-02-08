@@ -29,6 +29,7 @@ class GroupeFormType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choice_label' => 'username',
+                'attr' => ['class' => 'ks-cboxtags']
             ])
             //->add('picture')
             //->add('date')
