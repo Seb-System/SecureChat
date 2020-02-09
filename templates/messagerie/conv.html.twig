@@ -34,7 +34,7 @@
 													{% else %}
 														<a href="#">{{ u.username }}</a>
 													{% endif %}
-													{% if i > 1 or i < currentUsersGroupe|length - 1 %}
+													{% if i < currentUsersGroupe|length - 1 %}
 														{{", "}}
 													{% endif %}
 													{% set i = i + 1 %}

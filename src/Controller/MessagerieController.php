@@ -55,7 +55,6 @@ class MessagerieController extends AbstractController
             }
         }
 
-        
         $formImg = $this->createForm(UploadFileType::class, $user);
         $formImg->handleRequest($request);
 
@@ -147,7 +146,7 @@ class MessagerieController extends AbstractController
                     $users->addGroupe($currentGroupe);
                 }
                 $manager->flush();
-                $this->addFlash('success', 'Vous venez d\'ajouter des membres au groupe');
+                $this->addFlash('success', 'Vous venez de modifier les membres du groupe');
                 return $this->redirectToRoute('conv', ['id' => $id]);
             }
 
