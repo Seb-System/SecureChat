@@ -14,7 +14,7 @@ class MessageFormType extends AbstractType
     {
         $builder
             ->add('content',TextareaType::class, [
-                'attr' => ['class' => 'form-control', 'placeholder' => 'Ecrire un message...', 'rows' => '1']
+                'attr' => ['class' => 'form-control form-color-message', 'placeholder' => 'Ecrire un message...', 'rows' => '1']
             ])
             //->add('date')
             //->add('state')
