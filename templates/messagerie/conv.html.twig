@@ -34,7 +34,7 @@
 														{% else %}
 															<a href="#">{{ u.username }}</a>
 														{% endif %}
-														{% if i > 1 or i < currentUsersGroupe|length - 1 %}
+														{% if i < currentUsersGroupe|length - 1 %}
 															{{", "}}
 														{% endif %}
 														{% set i = i + 1 %}
@@ -49,10 +49,10 @@
 													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
 														<i class="ti-pencil"></i>Créer un groupe
 													</a>
-													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
-														<i class="ti-plus"></i>Edit les membres</a>
-													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#editphoto">
-														<i class="ti-plus"></i>Changer la photo</a>
+													{% if currentGroupe.usersP == user %}
+														<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
+															<i class="ti-plus"></i>Editer les membres</a>
+													{% endif %}
 												</div>
 											</div>
 											<button class="btn back-to-mesg" title="Back">
@@ -70,10 +70,17 @@
 									<div
 										class="col-md-12">
 										<!--div class="date">
+<<<<<<< HEAD
 																																																																																																																																																																																																																																																		<hr>
 																																																																																																																																																																																																																																																		<span>Yesterday</span>
 																																																																																																																																																																																																																																																		<hr>
 																																																																																																																																																																																																																																																	</div-->
+=======
+																																																																																																																																																																																																										<hr>
+																																																																																																																																																																																																										<span>Yesterday</span>
+																																																																																																																																																																																																										<hr>
+																																																																																																																																																																																																									</div-->
+>>>>>>> 095ed3457636811bbe51ab76ea96ead049d891aa
 										{% for m in messages %}
 											{% if m.user.id != user.id %}
 												<div class="message">
@@ -178,10 +185,17 @@
 													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
 														<i class="ti-pencil"></i>Créer un groupe
 													</a>
+<<<<<<< HEAD
 													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
 														<i class="ti-plus"></i>Editer les membres</a>
 													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#editphoto">
 														<i class="ti-plus"></i>Changer la photo</a</div>
+=======
+													{% if currentGroupe.usersP == user %}
+														<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
+															<i class="ti-plus"></i>Editer les membres</a>
+													{% endif %}
+>>>>>>> 095ed3457636811bbe51ab76ea96ead049d891aa
 												</div>
 												<button class="btn back-to-mesg" title="Back">
 													<i class="ti-arrow-right"></i>
