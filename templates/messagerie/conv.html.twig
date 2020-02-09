@@ -15,7 +15,6 @@
 				{% if messages|length > 0 %}
 					<!-- Start of Fill Chat -->
 					<div
-<<<<<<< HEAD
 						class="babble tab-pane fade active show">
 						<!-- Start of Chat -->
 						<div
@@ -41,43 +40,6 @@
 														{% set i = i + 1 %}
 													{% endfor %})
 												</h5>
-=======
-						class="chat" id="chat1">
-						<!-- Start Chat Header -->
-						<div class="top">
-							<div class="container">
-								<div class="col-md-12">
-									<div class="inside">
-										<div class="data">
-											<h5>
-												<strong>{{'Groupe : ' ~ currentGroupe.name}}</strong>
-												({% set i = 0 %}
-												{% for u in currentUsersGroupe %}
-													{% if u == user %}
-														<a href="#">{{ "Vous" }}</a>
-													{% else %}
-														<a href="#">{{ u.username }}</a>
-													{% endif %}
-													{% if i < currentUsersGroupe|length - 1 %}
-														{{", "}}
-													{% endif %}
-													{% set i = i + 1 %}
-												{% endfor %})
-											</h5>
-										</div>
-										<div class="dropdown">
-											<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="ti-view-grid"></i>
-											</button>
-											<div class="dropdown-menu dropdown-menu-right">
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
-													<i class="ti-pencil"></i>Créer un groupe
-												</a>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
-													<i class="ti-plus"></i>Edit les membres</a>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deletegroup">
-													<i class="ti-plus"></i>Supprimer le groupe</a>
->>>>>>> 4644cbb220976629298dbf0eb12ea98b40136cdc
 											</div>
 											<div class="dropdown">
 												<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -218,8 +180,6 @@
 													</a>
 													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
 														<i class="ti-plus"></i>Editer les membres</a>
-													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#editphoto">
-														<i class="ti-plus"></i>Changer la photo</a>
 												</div>
 											</div>
 											<button class="btn back-to-mesg" title="Back">
