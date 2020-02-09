@@ -8,6 +8,7 @@ use App\Form\AddMemberToGroupType;
 use App\Form\GroupeFormType;
 use App\Form\MessageFormType;
 use App\Form\UploadFileType;
+use App\Form\UploadImgGroupType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -161,6 +162,16 @@ class MessagerieController extends AbstractController
                     $manager->flush();
             }
 
+            //Formulaire changer image du groupe
+            $formImgGrp = $this->createForm(UploadImgGroupType::class, $currentGroupe);
+            $formImgGrp->handleRequest($request);
+
+            if ($formImgGrp->isSubmitted() && $formImgGrp->isValid()) {
+                    $manager->persist($currentGroupe);
+                    $currentGroupe->uploadFile();
+                    $manager->flush();
+            }
+
             // $this->addFlash('error', 'Vous n\'avez pas accès à cette conversation !');
             // return $this->redirectToRoute('index');
 
@@ -176,6 +187,7 @@ class MessagerieController extends AbstractController
                 'formImg' => $formImg->createView(),
                 'formAddMember' => $formAddMember->createView(),
                 'id' => $id,
+                'formImgGrp' => $formImgGrp->createView(),
             ]);
         }
     }

@@ -11,251 +11,282 @@
 	<!-- Chat content -->
 	<div class="main" id="chat-dialog">
 		<div class="tab-content" id="nav-tabContent">
-		<div name="contentRefresh" id="contentRefresh">
-			{% if messages|length > 0 %}
-				<!-- Start of Fill Chat -->
-				<div
-					class="babble tab-pane fade active show">
-					<!-- Start of Chat -->
+			<div name="contentRefresh" id="contentRefresh">
+				{% if messages|length > 0 %}
+					<!-- Start of Fill Chat -->
 					<div
-						class="chat" id="chat1">
-						<!-- Start Chat Header -->
-						<div class="top">
-							<div class="container">
-								<div class="col-md-12">
-									<div class="inside">
-										<div class="data">
-											<h5>
-												<strong>{{'Groupe : ' ~ currentGroupe.name}}</strong>
-												({% set i = 0 %}
-												{% for u in currentUsersGroupe %}
-													{% if u == user %}
-														<a href="#">{{ "Vous" }}</a>
-													{% else %}
-														<a href="#">{{ u.username }}</a>
-													{% endif %}
-													{% if i > 1 or i < currentUsersGroupe|length - 1 %}
-														{{", "}}
-													{% endif %}
-													{% set i = i + 1 %}
-												{% endfor %})
-											</h5>
-										</div>
-										<div class="dropdown">
-											<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="ti-view-grid"></i>
-											</button>
-											<div class="dropdown-menu dropdown-menu-right">
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
-													<i class="ti-pencil"></i>Créer un groupe
-												</a>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
-													<i class="ti-plus"></i>Edit les membres</a>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deletegroup">
-													<i class="ti-plus"></i>Supprimer le groupe</a>
+						class="babble tab-pane fade active show">
+						<!-- Start of Chat -->
+						<div
+							class="chat" id="chat1">
+							<!-- Start Chat Header -->
+							<div class="top">
+								<div class="container">
+									<div class="col-md-12">
+										<div class="inside">
+											<div class="data">
+												<h5>
+													<strong>{{'Groupe : ' ~ currentGroupe.name}}</strong>
+													({% set i = 0 %}
+													{% for u in currentUsersGroupe %}
+														{% if u == user %}
+															<a href="#">{{ "Vous" }}</a>
+														{% else %}
+															<a href="#">{{ u.username }}</a>
+														{% endif %}
+														{% if i > 1 or i < currentUsersGroupe|length - 1 %}
+															{{", "}}
+														{% endif %}
+														{% set i = i + 1 %}
+													{% endfor %})
+												</h5>
 											</div>
-										</div>
-										<button class="btn back-to-mesg" title="Back">
-											<i class="ti-arrow-right"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End Chat header -->
-
-						<!-- Start Chat Body -->
-						<div class="content" id="content">
-							<div class="container">
-								<div
-									class="col-md-12">
-									<!--div class="date">
-																																																																																																																																																																												<hr>
-																																																																																																																																																																												<span>Yesterday</span>
-																																																																																																																																																																												<hr>
-																																																																																																																																																																											</div-->
-									{% for m in messages %}
-										{% if m.user.id != user.id %}
-											<div class="message">
-												<img class="avatar-md" src="{{asset('dist/img/avatars/' ~ m.user.picture)}}" data-toggle="tooltip" data-placement="top" title="{{m.user.username}}" alt="avatar">
-												<div class="text-main">
-													<div class="text-group">
-														<div class="text">
-															<p>{{m.content}}</p>
-														</div>
-													</div>
-													<span>{{m.date|date("M jS \\a\\t G\\hi")}}</span>
+											<div class="dropdown">
+												<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="ti-view-grid"></i>
+												</button>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
+														<i class="ti-pencil"></i>Créer un groupe
+													</a>
+													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
+														<i class="ti-plus"></i>Edit les membres</a>
+													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#editphoto">
+														<i class="ti-plus"></i>Changer la photo</a>
 												</div>
 											</div>
-										{% else %}
-											<div class="message me">
-												<div class="text-main">
-													<div class="text-group me">
-														<div class="text me">
-															<p>{{m.content}}</p>
+											<button class="btn back-to-mesg" title="Back">
+												<i class="ti-arrow-right"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Chat header -->
+
+							<!-- Start Chat Body -->
+							<div class="content" id="content">
+								<div class="container">
+									<div
+										class="col-md-12">
+										<!--div class="date">
+																																																																																																																																																																																																																																								<hr>
+																																																																																																																																																																																																																																								<span>Yesterday</span>
+																																																																																																																																																																																																																																								<hr>
+																																																																																																																																																																																																																																							</div-->
+										{% for m in messages %}
+											{% if m.user.id != user.id %}
+												<div class="message">
+													<img class="avatar-md" src="{{asset('dist/img/avatars/' ~ m.user.picture)}}" data-toggle="tooltip" data-placement="top" title="{{m.user.username}}" alt="avatar">
+													<div class="text-main">
+														<div class="text-group">
+															<div class="text">
+																<p>{{m.content}}</p>
+															</div>
 														</div>
+														<span>{{m.date|date("M jS \\a\\t G\\hi")}}</span>
 													</div>
-													<span>{{m.date|date("M jS \\a\\t G\\hi")}}</span>
+												</div>
+											{% else %}
+												<div class="message me">
+													<div class="text-main">
+														<div class="text-group me">
+															<div class="text me">
+																<p>{{m.content}}</p>
+															</div>
+														</div>
+														<span>{{m.date|date("M jS \\a\\t G\\hi")}}</span>
+													</div>
+												</div>
+											{% endif %}
+										{% endfor %}
+										<!-- Entrain d'écrire -->
+										{# <div class="message">
+																																																																																																																																																																																																																					<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+																																																																																																																																																																																																																					<div class="text-main">
+																																																																																																																																																																																																																					<div class="text-group">
+																																																																																																																																																																																																																						<div class="text typing">
+																																																																																																																																																																																																																							<div class="wave">
+																																																																																																																																																																																																																								<span class="dot"></span>
+																																																																																																																																																																																																																								<span class="dot"></span>
+																																																																																																																																																																																																																								<span class="dot"></span>
+																																																																																																																																																																																																																							</div>
+																																																																																																																																																																																																																						</div>
+																																																																																																																																																																																																																					</div>
+																																																																																																																																																																																																																					</div>
+																																																																																																																																																																																																																					</div> #}
+									</div>
+								</div>
+							</div>
+							<!-- End Chat Body-->
+							<!-- Start Write Box -->
+							<div class="container">
+								<div class="col-md-12">
+									<div
+										class="bottom">
+										<!-- Start Form Message -->
+										{{ form_start(sendMessage, {'attr' : {'class':'text-area'}}) }}
+										{{ form_widget(sendMessage.content) }}
+										<div class="add-smiles">
+											<span title="add icon" class="em em-blush"></span>
+										</div>
+										<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
+											<i class="ti-location-arrow"></i>
+										</button>
+										{{ form_end(sendMessage) }}
+										<!-- End Form Message -->
+									</div>
+								</div>
+							</div>
+							<!-- End Write Box -->
+						</div>
+						<!-- End of Chat -->
+					</div>
+					<!-- End of Fill Chat -->
+				{% elseif messages|length < 1  %}
+					<!-- Start of Empty Chat -->
+					<div
+						class="babble tab-pane fade active show">
+						<!-- Start of Chat -->
+						<div class="chat" id="chat">
+							<div class="top">
+								<div class="container">
+									<div class="col-md-12">
+										<div class="inside">
+											<div class="data">
+												<h5>
+													<strong>{{'Groupe : ' ~ currentGroupe.name}}</strong>
+													({% set i = 0 %}
+													{% for u in currentUsersGroupe %}
+														{% if u == user %}
+															<a href="#">{{ "Vous" }}</a>
+														{% else %}
+															<a href="#">{{ u.username }}</a>
+														{% endif %}
+														{% if i < currentUsersGroupe|length - 1 %}
+															{{", "}}
+														{% endif %}
+														{% set i = i + 1 %}
+													{% endfor %})
+												</h5>
+											</div>
+											<div class="dropdown">
+												<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class="ti-view-grid"></i>
+												</button>
+												<div class="dropdown-menu dropdown-menu-right">
+													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
+														<i class="ti-pencil"></i>Créer un groupe
+													</a>
+													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
+														<i class="ti-plus"></i>Editer les membres</a>
+													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#editphoto">
+														<i class="ti-plus"></i>Changer la photo</a>
 												</div>
 											</div>
-										{% endif %}
-									{% endfor %}
-									<!-- Entrain d'écrire -->
-									{# <div class="message">
-																																																																																																																																																									<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
-																																																																																																																																																									<div class="text-main">
-																																																																																																																																																									<div class="text-group">
-																																																																																																																																																										<div class="text typing">
-																																																																																																																																																											<div class="wave">
-																																																																																																																																																												<span class="dot"></span>
-																																																																																																																																																												<span class="dot"></span>
-																																																																																																																																																												<span class="dot"></span>
-																																																																																																																																																											</div>
-																																																																																																																																																										</div>
-																																																																																																																																																									</div>
-																																																																																																																																																									</div>
-																																																																																																																																																									</div> #}
-								</div>
-							</div>
-						</div>
-						<!-- End Chat Body-->
-						<!-- Start Write Box -->
-						<div class="container">
-							<div class="col-md-12">
-								<div
-									class="bottom">
-									<!-- Start Form Message -->
-									{{ form_start(sendMessage, {'attr' : {'class':'text-area'}}) }}
-									{{ form_widget(sendMessage.content) }}
-									<div class="add-smiles">
-										<span title="add icon" class="em em-blush"></span>
-									</div>
-									<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
-										<i class="ti-location-arrow"></i>
-									</button>
-									{{ form_end(sendMessage) }}
-									<!-- End Form Message -->
-								</div>
-							</div>
-						</div>
-						<!-- End Write Box -->
-					</div>
-					<!-- End of Chat -->
-				</div>
-				<!-- End of Fill Chat -->
-			{% elseif messages|length < 1  %}
-				<!-- Start of Empty Chat -->
-				<div
-					class="babble tab-pane fade active show">
-					<!-- Start of Chat -->
-					<div class="chat" id="chat">
-						<div class="top">
-							<div class="container">
-								<div class="col-md-12">
-									<div class="inside">
-										<div class="data">
-											<h5>
-												<strong>{{'Groupe : ' ~ currentGroupe.name}}</strong>
-												({% set i = 0 %}
-												{% for u in currentUsersGroupe %}
-													{% if u == user %}
-														<a href="#">{{ "Vous" }}</a>
-													{% else %}
-														<a href="#">{{ u.username }}</a>
-													{% endif %}
-													{% if i < currentUsersGroupe|length - 1 %}
-														{{", "}}
-													{% endif %}
-													{% set i = i + 1 %}
-												{% endfor %})
-											</h5>
-										</div>
-										<div class="dropdown">
-											<button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="ti-view-grid"></i>
+											<button class="btn back-to-mesg" title="Back">
+												<i class="ti-arrow-right"></i>
 											</button>
-											<div class="dropdown-menu dropdown-menu-right">
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
-													<i class="ti-pencil"></i>Créer un groupe
-												</a>
-												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
-													<i class="ti-plus"></i>Editer les membres</a>
-											</div>
 										</div>
-										<button class="btn back-to-mesg" title="Back">
-											<i class="ti-arrow-right"></i>
-										</button>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="content empty">
+							<div class="content empty">
+								<div class="container">
+									<div class="col-md-12">
+										<div class="no-messages">
+											<i class="ti-comments"></i>
+											<p>Aucuns méssages n'a été envoyés pour le moment. Soit le premier à briser la glace !</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
 							<div class="container">
 								<div class="col-md-12">
-									<div class="no-messages">
-										<i class="ti-comments"></i>
-										<p>Aucuns méssages n'a été envoyés pour le moment. Soit le premier à briser la glace !</p>
+									<div
+										class="bottom">
+										<!-- Start Form Message -->
+
+										{{ form_start(sendMessage, {'attr' : {'class':'text-area'}}) }}
+										{{ form_widget(sendMessage.content) }}
+										<div class="add-smiles">
+											<span title="add icon" class="em em-blush"></span>
+										</div>
+										<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
+											<i class="ti-location-arrow"></i>
+										</button>
+										{{ form_end(sendMessage) }}
+										<!-- End Form Message -->
 									</div>
 								</div>
 							</div>
 						</div>
-
-
-						<div class="container">
-							<div class="col-md-12">
-								<div
-									class="bottom">
-									<!-- Start Form Message -->
-
-									{{ form_start(sendMessage, {'attr' : {'class':'text-area'}}) }}
-									{{ form_widget(sendMessage.content) }}
-									<div class="add-smiles">
-										<span title="add icon" class="em em-blush"></span>
-									</div>
-									<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
-										<i class="ti-location-arrow"></i>
-									</button>
-									{{ form_end(sendMessage) }}
-									<!-- End Form Message -->
-								</div>
-							</div>
-						</div>
+						<!-- End of Chat -->
 					</div>
-					<!-- End of Chat -->
+					<!-- End of Empty Chat -->
 				</div>
-				<!-- End of Empty Chat -->
-			</div>
-		{% endif %}
+			{% endif %}
 		</div>
 
-		
+
 	</div>
+
+	<!-- Create Chat -->
+	<div class="modal fade" id="editphoto" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="requests">
+				<div class="title">
+					<h1>Modifier la photo</h1>
+					<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+						<i class="ti-close"></i>
+					</button>
+				</div>
+				<div class="content">
+					{{ form_start(formImgGrp) }}
+					<div class="upload">
+						<div class="data">
+							<label>
+								{{ form_widget(formImgGrp.file) }}
+								<span class="btn button">Ajouter un avatar</span>
+							</label>
+						</div>
+						<p>Pour un meilleur résultat veuillez mettre une image de 200px par 200px</p>
+					</div>
+					<button type="submit" class="btn button w-100">Sauvegarder</button>
+					{{ form_end(formImgGrp) }}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Create Chat -->
 
 
 	<!-- Create Chat -->
-					<div class="modal fade" id="addmemberschat" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="requests">
-								<div class="title">
-									<h1>Modifier les membres</h1>
-									<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
-										<i class="ti-close"></i>
-									</button>
-								</div>
-								<div class="content">
-									{{ form_start(formAddMember) }}
-									<div class="form-group">
-										<label for="topic">Utilisateurs:</label>
-										<div>
-											{{ form_widget(formAddMember.users) }}
-										</div>
-									</div>
-									<button type="submit" class="btn button w-100">Modifier les membres</button>
-									{{ form_end(formAddMember) }}
-								</div>
-							</div>
+	<div class="modal fade" id="addmemberschat" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="requests">
+				<div class="title">
+					<h1>Modifier les membres</h1>
+					<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+						<i class="ti-close"></i>
+					</button>
+				</div>
+				<div class="content">
+					{{ form_start(formAddMember) }}
+					<div class="form-group">
+						<label for="topic">Utilisateurs:</label>
+						<div>
+							{{ form_widget(formAddMember.users) }}
 						</div>
 					</div>
-					<!-- End Create Chat -->
+					<button type="submit" class="btn button w-100">Modifier les membres</button>
+					{{ form_end(formAddMember) }}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Create Chat -->
 
 {% endblock %}
