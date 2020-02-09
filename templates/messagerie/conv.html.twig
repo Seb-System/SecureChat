@@ -70,10 +70,10 @@
 									<div
 										class="col-md-12">
 										<!--div class="date">
-																																																																																																																																																																																																																																								<hr>
-																																																																																																																																																																																																																																								<span>Yesterday</span>
-																																																																																																																																																																																																																																								<hr>
-																																																																																																																																																																																																																																							</div-->
+																																																																																																																																																																																																																																																		<hr>
+																																																																																																																																																																																																																																																		<span>Yesterday</span>
+																																																																																																																																																																																																																																																		<hr>
+																																																																																																																																																																																																																																																	</div-->
 										{% for m in messages %}
 											{% if m.user.id != user.id %}
 												<div class="message">
@@ -102,19 +102,19 @@
 										{% endfor %}
 										<!-- Entrain d'écrire -->
 										{# <div class="message">
-																																																																																																																																																																																																																					<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
-																																																																																																																																																																																																																					<div class="text-main">
-																																																																																																																																																																																																																					<div class="text-group">
-																																																																																																																																																																																																																						<div class="text typing">
-																																																																																																																																																																																																																							<div class="wave">
-																																																																																																																																																																																																																								<span class="dot"></span>
-																																																																																																																																																																																																																								<span class="dot"></span>
-																																																																																																																																																																																																																								<span class="dot"></span>
-																																																																																																																																																																																																																							</div>
-																																																																																																																																																																																																																						</div>
-																																																																																																																																																																																																																					</div>
-																																																																																																																																																																																																																					</div>
-																																																																																																																																																																																																																					</div> #}
+																																																																																																																																																																																																																															<img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Karen joye" alt="avatar">
+																																																																																																																																																																																																																															<div class="text-main">
+																																																																																																																																																																																																																															<div class="text-group">
+																																																																																																																																																																																																																																<div class="text typing">
+																																																																																																																																																																																																																																	<div class="wave">
+																																																																																																																																																																																																																																		<span class="dot"></span>
+																																																																																																																																																																																																																																		<span class="dot"></span>
+																																																																																																																																																																																																																																		<span class="dot"></span>
+																																																																																																																																																																																																																																	</div>
+																																																																																																																																																																																																																																</div>
+																																																																																																																																																																																																																															</div>
+																																																																																																																																																																																																																															</div>
+																																																																																																																																																																																																																															</div> #}
 									</div>
 								</div>
 							</div>
@@ -180,111 +180,112 @@
 													</a>
 													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
 														<i class="ti-plus"></i>Editer les membres</a>
+													<a href="#" class="dropdown-item" data-toggle="modal" data-target="#editphoto">
+														<i class="ti-plus"></i>Changer la photo</a</div>
 												</div>
+												<button class="btn back-to-mesg" title="Back">
+													<i class="ti-arrow-right"></i>
+												</button>
 											</div>
-											<button class="btn back-to-mesg" title="Back">
-												<i class="ti-arrow-right"></i>
-											</button>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="content empty">
+								<div class="content empty">
+									<div class="container">
+										<div class="col-md-12">
+											<div class="no-messages">
+												<i class="ti-comments"></i>
+												<p>Aucuns méssages n'a été envoyés pour le moment. Soit le premier à briser la glace !</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
 								<div class="container">
 									<div class="col-md-12">
-										<div class="no-messages">
-											<i class="ti-comments"></i>
-											<p>Aucuns méssages n'a été envoyés pour le moment. Soit le premier à briser la glace !</p>
+										<div
+											class="bottom">
+											<!-- Start Form Message -->
+
+											{{ form_start(sendMessage, {'attr' : {'class':'text-area'}}) }}
+											{{ form_widget(sendMessage.content) }}
+											<div class="add-smiles">
+												<span title="add icon" class="em em-blush"></span>
+											</div>
+											<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
+												<i class="ti-location-arrow"></i>
+											</button>
+											{{ form_end(sendMessage) }}
+											<!-- End Form Message -->
 										</div>
 									</div>
 								</div>
 							</div>
+							<!-- End of Chat -->
+						</div>
+						<!-- End of Empty Chat -->
+					</div>
+				{% endif %}
+			</div>
 
 
-							<div class="container">
-								<div class="col-md-12">
-									<div
-										class="bottom">
-										<!-- Start Form Message -->
+		</div>
 
-										{{ form_start(sendMessage, {'attr' : {'class':'text-area'}}) }}
-										{{ form_widget(sendMessage.content) }}
-										<div class="add-smiles">
-											<span title="add icon" class="em em-blush"></span>
-										</div>
-										<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
-											<i class="ti-location-arrow"></i>
-										</button>
-										{{ form_end(sendMessage) }}
-										<!-- End Form Message -->
-									</div>
-								</div>
+		<!-- Create Chat -->
+		<div class="modal fade" id="editphoto" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="requests">
+					<div class="title">
+						<h1>Modifier la photo</h1>
+						<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+							<i class="ti-close"></i>
+						</button>
+					</div>
+					<div class="content">
+						{{ form_start(formImgGrp) }}
+						<div class="upload">
+							<div class="data">
+								<label>
+									{{ form_widget(formImgGrp.file) }}
+									<span class="btn button">Ajouter un avatar</span>
+								</label>
+							</div>
+							<p>Pour un meilleur résultat veuillez mettre une image de 200px par 200px</p>
+						</div>
+						<button type="submit" class="btn button w-100">Sauvegarder</button>
+						{{ form_end(formImgGrp) }}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Create Chat -->
+
+
+		<!-- Create Chat -->
+		<div class="modal fade" id="addmemberschat" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="requests">
+					<div class="title">
+						<h1>Modifier les membres</h1>
+						<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+							<i class="ti-close"></i>
+						</button>
+					</div>
+					<div class="content">
+						{{ form_start(formAddMember) }}
+						<div class="form-group">
+							<label for="topic">Utilisateurs:</label>
+							<div>
+								{{ form_widget(formAddMember.users) }}
 							</div>
 						</div>
-						<!-- End of Chat -->
+						<button type="submit" class="btn button w-100">Modifier les membres</button>
+						{{ form_end(formAddMember) }}
 					</div>
-					<!-- End of Empty Chat -->
-				</div>
-			{% endif %}
-		</div>
-
-
-	</div>
-
-	<!-- Create Chat -->
-	<div class="modal fade" id="editphoto" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="requests">
-				<div class="title">
-					<h1>Modifier la photo</h1>
-					<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
-						<i class="ti-close"></i>
-					</button>
-				</div>
-				<div class="content">
-					{{ form_start(formImgGrp) }}
-					<div class="upload">
-						<div class="data">
-							<label>
-								{{ form_widget(formImgGrp.file) }}
-								<span class="btn button">Ajouter un avatar</span>
-							</label>
-						</div>
-						<p>Pour un meilleur résultat veuillez mettre une image de 200px par 200px</p>
-					</div>
-					<button type="submit" class="btn button w-100">Sauvegarder</button>
-					{{ form_end(formImgGrp) }}
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- End Create Chat -->
+		<!-- End Create Chat -->
 
-
-	<!-- Create Chat -->
-	<div class="modal fade" id="addmemberschat" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="requests">
-				<div class="title">
-					<h1>Modifier les membres</h1>
-					<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
-						<i class="ti-close"></i>
-					</button>
-				</div>
-				<div class="content">
-					{{ form_start(formAddMember) }}
-					<div class="form-group">
-						<label for="topic">Utilisateurs:</label>
-						<div>
-							{{ form_widget(formAddMember.users) }}
-						</div>
-					</div>
-					<button type="submit" class="btn button w-100">Modifier les membres</button>
-					{{ form_end(formAddMember) }}
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Create Chat -->
-
-{% endblock %}
+	{% endblock %}
