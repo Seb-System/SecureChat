@@ -11,6 +11,7 @@
 	<!-- Chat content -->
 	<div class="main" id="chat-dialog">
 		<div class="tab-content" id="nav-tabContent">
+		<div name="contentRefresh" id="contentRefresh">
 			{% if messages|length > 0 %}
 				<!-- Start of Fill Chat -->
 				<div
@@ -48,10 +49,10 @@
 												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
 													<i class="ti-pencil"></i>Créer un groupe
 												</a>
-												<a href="#" class="dropdown-item">
-													<i class="ti-plus"></i>Ajouter un membre</a>
-												<a href="#" class="dropdown-item">
-													<i class="ti-trash"></i>Kick un membre</a>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
+													<i class="ti-plus"></i>Edit les membres</a>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#deletegroup">
+													<i class="ti-plus"></i>Supprimer le groupe</a>
 											</div>
 										</div>
 										<button class="btn back-to-mesg" title="Back">
@@ -62,6 +63,7 @@
 							</div>
 						</div>
 						<!-- End Chat header -->
+
 						<!-- Start Chat Body -->
 						<div class="content" id="content">
 							<div class="container">
@@ -128,7 +130,7 @@
 									<div class="add-smiles">
 										<span title="add icon" class="em em-blush"></span>
 									</div>
-									<button type="submit" class="btn send">
+									<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
 										<i class="ti-location-arrow"></i>
 									</button>
 									{{ form_end(sendMessage) }}
@@ -176,10 +178,8 @@
 												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#startnewchat">
 													<i class="ti-pencil"></i>Créer un groupe
 												</a>
-												<a href="#" class="dropdown-item">
-													<i class="ti-plus"></i>Ajouter un membre</a>
-												<a href="#" class="dropdown-item">
-													<i class="ti-trash"></i>Retirer une personne</a>
+												<a href="#" class="dropdown-item" data-toggle="modal" data-target="#addmemberschat">
+													<i class="ti-plus"></i>Editer les membres</a>
 											</div>
 										</div>
 										<button class="btn back-to-mesg" title="Back">
@@ -199,6 +199,8 @@
 								</div>
 							</div>
 						</div>
+
+
 						<div class="container">
 							<div class="col-md-12">
 								<div
@@ -210,7 +212,7 @@
 									<div class="add-smiles">
 										<span title="add icon" class="em em-blush"></span>
 									</div>
-									<button type="submit" class="btn send">
+									<button type="submit" class="btn send" name="btn-msg" id="btn-msg">
 										<i class="ti-location-arrow"></i>
 									</button>
 									{{ form_end(sendMessage) }}
@@ -224,5 +226,36 @@
 				<!-- End of Empty Chat -->
 			</div>
 		{% endif %}
+		</div>
+
+		
 	</div>
+
+
+	<!-- Create Chat -->
+					<div class="modal fade" id="addmemberschat" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="requests">
+								<div class="title">
+									<h1>Modifier les membres</h1>
+									<button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+										<i class="ti-close"></i>
+									</button>
+								</div>
+								<div class="content">
+									{{ form_start(formAddMember) }}
+									<div class="form-group">
+										<label for="topic">Utilisateurs:</label>
+										<div>
+											{{ form_widget(formAddMember.users) }}
+										</div>
+									</div>
+									<button type="submit" class="btn button w-100">Modifier les membres</button>
+									{{ form_end(formAddMember) }}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Create Chat -->
+
 {% endblock %}

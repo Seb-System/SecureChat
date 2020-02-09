@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Groupe;
 use App\Entity\Message;
-use App\Entity\User;
+use App\Form\AddMemberToGroupType;
 use App\Form\GroupeFormType;
 use App\Form\MessageFormType;
+use App\Form\UploadFileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class MessagerieController extends AbstractController
 {
@@ -19,15 +21,11 @@ class MessagerieController extends AbstractController
     public function index(Request $request)
     {
         $manager = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository(User::class);
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
         $userId = $user->getId();
         $groupes = $user->getGroupes();
-
-        //Get all users
-        $allUsersExceptCurrentOne = $repo->allUsersExceptCurrentOne($userId);
 
         //Formulaire
         $groupe = new Groupe;
@@ -57,11 +55,22 @@ class MessagerieController extends AbstractController
             }
         }
 
+        
+        $formImg = $this->createForm(UploadFileType::class, $user);
+        $formImg->handleRequest($request);
+
+        if ($formImg->isSubmitted() && $formImg->isValid()) {
+                $manager->persist($user);
+                $user->uploadFile();
+                $manager->flush();
+        }
+
 
         return $this->render('messagerie/index.html.twig', [
             'user' => $user,
             'groupes' => $groupes,
             'form' => $form->createView(),
+            'formImg' => $formImg->createView(),
         ]);
     }
 
@@ -70,8 +79,8 @@ class MessagerieController extends AbstractController
      */
     public function conv(Request $request, $id)
     {
+        
         $manager = $this->getDoctrine()->getManager();
-        $repoUser = $this->getDoctrine()->getRepository(User::class);
         $repoGroupe = $this->getDoctrine()->getRepository(Groupe::class);
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -85,6 +94,8 @@ class MessagerieController extends AbstractController
         } else {
             //Get messages
             $messages = $repoGroupe->find($id)->getMessages();
+
+            $lastMessage = $repoGroupe->find($id)->getMessages()->last()->getContent();
 
             //Formulaire créer un groupe
             $groupe = new Groupe;
@@ -127,6 +138,31 @@ class MessagerieController extends AbstractController
                 return $this->redirectToRoute('conv', ['id' => $id]);
             }
 
+            $formAddMember = $this->createForm(AddMemberToGroupType::class, $currentGroupe, ['idUser' => $userId]);
+            $formAddMember->handleRequest($request);
+
+            //Formulaire ajout de membres
+            if ($formAddMember->isSubmitted() && $formAddMember->isValid()) {
+                $manager->persist($currentGroupe);
+                $currentGroupe->addUser($user);
+                foreach ($currentGroupe->getUsers() as $users) {
+                    $users->addGroupe($currentGroupe);
+                }
+                $manager->flush();
+                $this->addFlash('success', 'Vous venez d\'ajouter des membres au groupe');
+                return $this->redirectToRoute('conv', ['id' => $id]);
+            }
+
+            //Formulaire changer image de profile
+            $formImg = $this->createForm(UploadFileType::class, $user);
+            $formImg->handleRequest($request);
+
+            if ($formImg->isSubmitted() && $formImg->isValid()) {
+                    $manager->persist($user);
+                    $user->uploadFile();
+                    $manager->flush();
+            }
+
             // $this->addFlash('error', 'Vous n\'avez pas accès à cette conversation !');
             // return $this->redirectToRoute('index');
 
@@ -134,10 +170,15 @@ class MessagerieController extends AbstractController
                 'user' => $user,
                 'groupes' => $groupes,
                 'form' => $form->createView(),
+                'formAddMember' => $formAddMember->createView(),
                 'messages' => $messages,
                 'currentUsersGroupe' => $currentGroupe->getUsers(),
                 'currentGroupe' => $currentGroupe,
                 'sendMessage' => $sendMessage->createView(),
+                'formImg' => $formImg->createView(),
+                'formAddMember' => $formAddMember->createView(),
+                'lastMessage' => $lastMessage,
+                'id' => $id,
             ]);
         }
     }

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -51,6 +52,8 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $picture;
+
+    private $file;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Groupe", mappedBy="users")
@@ -222,5 +225,66 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile(UploadedFile $file)
+    {
+        $this->file = $file;
+        return $this;
+    }
+
+    public function uploadFile()
+    {
+        $name = $this->file->getClientOriginalName();
+        $newName = $this->renameFile($name);
+        $this->picture = $newName;
+        $this->file->move($this->dirPhoto(), $newName);
+    }
+
+    public function removeFile()
+    {
+        $linkImage = $this->dirPhoto() . $this->picture;
+        if(file_exists($linkImage)) {
+            unlink($linkImage);
+        }
+    }
+
+    public function renameFile($name)
+    {
+        return 'photo_'.time().'_'.rand(1,99999).'_'.$name;
+    }
+
+    public function dirPhoto()
+    {
+        return __DIR__.'/../../public/dist/img/avatars/';
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
     }
 }
