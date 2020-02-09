@@ -95,8 +95,6 @@ class MessagerieController extends AbstractController
             //Get messages
             $messages = $repoGroupe->find($id)->getMessages();
 
-            $lastMessage = $repoGroupe->find($id)->getMessages()->last()->getContent();
-
             //Formulaire créer un groupe
             $groupe = new Groupe;
             $form = $this->createForm(GroupeFormType::class, $groupe, [
@@ -177,7 +175,6 @@ class MessagerieController extends AbstractController
                 'sendMessage' => $sendMessage->createView(),
                 'formImg' => $formImg->createView(),
                 'formAddMember' => $formAddMember->createView(),
-                'lastMessage' => $lastMessage,
                 'id' => $id,
             ]);
         }

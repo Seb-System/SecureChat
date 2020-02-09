@@ -91,7 +91,7 @@
 															<div class="data">
 																<h5>{{g.name}}</h5>
 																<span>{{ g.date|date("M jS \\a\\t G\\hi") }}</span>
-																<p>{{ lastMessage }}</p>
+																<p>{{ g.messages[g.messages|length-1].content }}</p>
 															</div>
 														</a>
 													{% endif %}
